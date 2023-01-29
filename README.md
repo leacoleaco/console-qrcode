@@ -12,7 +12,9 @@ add maven dependency in pom.xml:
 </dependency>
 ```
 
-##### Print Qrcode in console
+___
+
+#### Print Qrcode in console
 use these code (java or kotlin):
 
 ```kotlin
@@ -24,9 +26,9 @@ the console will print the qrcode like this:
 ![example](doc/sample.png)
 
 
+___
 
-
-##### Get the unicode qrcode string
+#### Get the unicode qrcode string
 
 We can use:
 ```kotlin
@@ -39,8 +41,8 @@ println(code);
 String code = ConsoleQrcode.print("https://www.github.com");
 System.out.println(code);
 ```
-then we can see the unicode qrcode string like this:
-```text
+Then we can see the unicode qrcode string like this:
+```html
                                  
                                  
     █▀▀▀▀▀█ ██▀▀ █▀▀▀ █▀▀▀▀▀█    
@@ -58,3 +60,44 @@ then we can see the unicode qrcode string like this:
     ▀▀▀▀▀▀▀  ▀  ▀ ▀▀▀▀▀  ▀▀ ▀    
                                  
 ```
+
+But because of the line-high, we can not scan the qrcode.
+if we want to use the unicode qrcode, we should adjust the screen printer's
+line-high.
+
+e.g.
+```html
+<pre style="line-height: 12px">
+    █▀▀▀▀▀█ ██▀▀ █▀▀▀ █▀▀▀▀▀█    
+    █ ███ █   ▄▄ ██▄  █ ███ █    
+    █ ▀▀▀ █ ▄█▀▀█▄▄▄  █ ▀▀▀ █    
+    ▀▀▀▀▀▀▀ █▄█ ▀▄█ █ ▀▀▀▀▀▀▀    
+    ▄ ▄▀▀▄▀▄▄▀█ ▄█  ▄▀█▀ ▄ ██    
+    █▄██▀▀▀ ▀▀▄█▀▀▀▀  ▀▄▄▀▀ ▄    
+    ▄█  ▀▄▀▀█ █▄ ▀▄▀█ ▀▄█▀██▄    
+    ██▀ █▀▀▄▄▀ ▄▄▄██▄▀ ▄▀ █▄     
+    ▀ ▀▀▀▀▀▀▀█▄█ █▄▄█▀▀▀█▄▄█▀    
+    █▀▀▀▀▀█  ▄▀ ▀▄▀ █ ▀ █▀ █▄    
+    █ ███ █ █▄▀▄▄█▀███▀▀█▄▀▀▀    
+    █ ▀▀▀ █  ▀▀ ▀ ██     █▀▄     
+    ▀▀▀▀▀▀▀  ▀  ▀ ▀▀▀▀▀  ▀▀ ▀    
+</pre>
+```
+
+then,we can get the correct qrcode in web browser:
+
+<pre style="line-height: 12px">
+    █▀▀▀▀▀█ ██▀▀ █▀▀▀ █▀▀▀▀▀█    
+    █ ███ █   ▄▄ ██▄  █ ███ █    
+    █ ▀▀▀ █ ▄█▀▀█▄▄▄  █ ▀▀▀ █    
+    ▀▀▀▀▀▀▀ █▄█ ▀▄█ █ ▀▀▀▀▀▀▀    
+    ▄ ▄▀▀▄▀▄▄▀█ ▄█  ▄▀█▀ ▄ ██    
+    █▄██▀▀▀ ▀▀▄█▀▀▀▀  ▀▄▄▀▀ ▄    
+    ▄█  ▀▄▀▀█ █▄ ▀▄▀█ ▀▄█▀██▄    
+    ██▀ █▀▀▄▄▀ ▄▄▄██▄▀ ▄▀ █▄     
+    ▀ ▀▀▀▀▀▀▀█▄█ █▄▄█▀▀▀█▄▄█▀    
+    █▀▀▀▀▀█  ▄▀ ▀▄▀ █ ▀ █▀ █▄    
+    █ ███ █ █▄▀▄▄█▀███▀▀█▄▀▀▀    
+    █ ▀▀▀ █  ▀▀ ▀ ██     █▀▄     
+    ▀▀▀▀▀▀▀  ▀  ▀ ▀▀▀▀▀  ▀▀ ▀    
+</pre>
