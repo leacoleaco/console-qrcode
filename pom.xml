@@ -6,7 +6,7 @@
 
     <artifactId>console-qrcode</artifactId>
     <groupId>pro.leaco.qrcode</groupId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <url>https://github.com/leacoleaco/console-qrcode</url>

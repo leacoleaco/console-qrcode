@@ -11,6 +11,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import com.google.zxing.qrcode.decoder.Mode
 import com.google.zxing.qrcode.decoder.Version
 import java.io.UnsupportedEncodingException
+import java.lang.StringBuilder
 import java.util.*
 
 object ConsoleQrcode {
@@ -32,6 +33,61 @@ object ConsoleQrcode {
      * @param content the qrcode's content
      */
     fun print(content: String) {
+        generateQrcodeBitMatrix(content) { maxWidth, bitMatrix ->
+            for (i in 0 until maxWidth) {
+                for (j in 0 until maxWidth) {
+                    kotlin.io.print(if (bitMatrix[i, j]) BLACK else WHITE)
+                }
+                print('\n')
+            }
+        }
+    }
+
+    /**
+     * convert qrcode to the unicode string
+     * e.g.
+     * ```text
+     *  █▀▀▀▀▀█ ██▀▀ █▀▀▀ █▀▀▀▀▀█
+     *  █ ███ █   ▄▄ ██▄  █ ███ █
+     *  █ ▀▀▀ █ ▄█▀▀█▄▄▄  █ ▀▀▀ █
+     *  ▀▀▀▀▀▀▀ █▄█ ▀▄█ █ ▀▀▀▀▀▀▀
+     *  ▄ ▄▀▀▄▀▄▄▀█ ▄█  ▄▀█▀ ▄ ██
+     *  █▄██▀▀▀ ▀▀▄█▀▀▀▀  ▀▄▄▀▀ ▄
+     *  ▄█  ▀▄▀▀█ █▄ ▀▄▀█ ▀▄█▀██▄
+     *  ██▀ █▀▀▄▄▀ ▄▄▄██▄▀ ▄▀ █▄
+     *  ▀ ▀▀▀▀▀▀▀█▄█ █▄▄█▀▀▀█▄▄█▀
+     *  █▀▀▀▀▀█  ▄▀ ▀▄▀ █ ▀ █▀ █▄
+     *  █ ███ █ █▄▀▄▄█▀███▀▀█▄▀▀▀
+     *  █ ▀▀▀ █  ▀▀ ▀ ██     █▀▄
+     *  ▀▀▀▀▀▀▀  ▀  ▀ ▀▀▀▀▀  ▀▀ ▀
+     *  ```
+     *
+     * @param content the qrcode's content
+     * @return unicode string
+     */
+    fun generateUnicodeQrcode(content: String): String {
+        val r = StringBuilder()
+        generateQrcodeBitMatrix(content) { maxWidth, bitMatrix ->
+            for (i in 0 until maxWidth - 1 step 2) {
+                for (j in 0 until maxWidth) {
+                    val t = if (bitMatrix[i, j]) 0b10 else 0
+                    val b = if (bitMatrix[i + 1, j]) 0b01 else 0
+                    val c = when (val s = t + b) {
+                        0b00 -> ' '
+                        0b10 -> '\u2580'
+                        0b01 -> '\u2584'
+                        0b11 -> '\u2588'
+                        else -> throw Error("impossible map: ${s.toString(2)}")
+                    }
+                    r.append(c)
+                }
+                r.append('\n')
+            }
+        }
+        return r.toString()
+    }
+
+    private fun generateQrcodeBitMatrix(content: String, block: (maxWidth: Int, bitMatrix: BitMatrix) -> Unit) {
         val hints: MutableMap<EncodeHintType, Any?> = EnumMap(EncodeHintType::class.java)
         hints[EncodeHintType.CHARACTER_SET] = "UTF-8"
 
@@ -43,22 +99,13 @@ object ConsoleQrcode {
         }
         val width = maxWidth
         val height = maxWidth
-        var bitMatrix: BitMatrix? = null
-        try {
-            bitMatrix = MultiFormatWriter().encode(
-                content,
-                BarcodeFormat.QR_CODE, width, height, hints
-            )
-        } catch (e: WriterException) {
-            e.printStackTrace()
-        }
-        for (i in 0 until maxWidth) {
-            for (j in 0 until maxWidth) {
-                kotlin.io.print(if (bitMatrix!![i, j]) BLACK else WHITE)
-            }
-            print('\n')
-        }
+        val bitMatrix = MultiFormatWriter().encode(
+            content,
+            BarcodeFormat.QR_CODE, width, height, hints
+        )
+        block.invoke(maxWidth, bitMatrix)
     }
+
 
     @Throws(WriterException::class)
     private fun getVersion(content: String, hints: Map<EncodeHintType, Any?>?): Int {
