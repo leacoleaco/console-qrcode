@@ -15,8 +15,8 @@ import java.lang.StringBuilder
 import java.util.*
 
 object ConsoleQrcode {
-    private var BLACK = "\u001b[40m  \u001b[0m"
-    private var WHITE = "\u001b[47m  \u001b[0m"
+    private const val BLACK = "\u001b[40m  \u001b[0m"
+    private const val WHITE = "\u001b[47m  \u001b[0m"
     private const val DEFAULT_BYTE_MODE_ENCODING = "ISO-8859-1"
     private val ALPHANUMERIC_TABLE = intArrayOf(
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  // 0x00-0x0f
