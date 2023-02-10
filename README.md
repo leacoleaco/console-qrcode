@@ -1,8 +1,8 @@
-## Print QrCode In Console
+## Print QR Code In Console
 
-### usages
+### Usages
 
-add maven dependency in pom.xml:
+Add maven dependency in pom.xml:
 
 ```xml
 <dependency>
@@ -14,23 +14,23 @@ add maven dependency in pom.xml:
 
 ___
 
-#### Print Qrcode in console
-use these code (java or kotlin):
+#### Print QR code in console
+Use the following code (java or kotlin):
 
 ```kotlin
 ConsoleQrcode.print("https://www.github.com");
 ```
 
-the console will print the qrcode like this:
+The console will print the QR code as following:
 
 ![example](doc/sample.png)
 
 
 ___
 
-#### Get the unicode qrcode string
+#### Get the unicode QR code string
 
-We can use:
+Use the following code (java or kotlin):
 ```kotlin
 //for kotlin
 val code:String = ConsoleQrcode.print("https://www.github.com")
@@ -41,7 +41,7 @@ println(code);
 String code = ConsoleQrcode.print("https://www.github.com");
 System.out.println(code);
 ```
-Then we can see the unicode qrcode string like this:
+Then we can see the unicode QR code string like this:
 ```html
                                  
                                  
@@ -61,8 +61,8 @@ Then we can see the unicode qrcode string like this:
                                  
 ```
 
-But because of the line-high, we can not scan the qrcode.
-if we want to use the unicode qrcode, we should adjust the screen printer's
+But because of the line-high, we can not scan the QR code successfully.
+If we would like to use the unicode QR code, we can adjust the screen printer's
 line-high.
 
 e.g.
@@ -84,6 +84,6 @@ e.g.
 </pre>
 ```
 
-then,we can get the correct qrcode in web browser:
+Then, we can get the correct QR code in web browser:
 
 ![example](doc/html_preview.png)
